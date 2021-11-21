@@ -1,0 +1,101 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+#[project.scripts]
+#network-backup = "network_backup.main:run"
+
+[project]
+name = "nornir_sql"
+authors = [ {name = "Viktor Kertesz", email = "viktor.kertesz@exxonmobil.com"},
+]
+
+readme = "README.rst"
+requires-python = ">=3.6,<4"
+dependencies = [
+    "nornir",
+    "sqlalchemy",
+]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dynamic = ['version', 'description']
+
+[project.entry-points."nornir.plugins.inventory"]
+"SQLInventory" = "nornir_sql.plugins.inventory.sql:SQLInventory"
+
+[tool.flit.module]
+name = "nornir_sql"
+
+[project.urls]
+Source = "https://github.xom.com/viktor-kertesz/nornir_sql"
+
+[project.optional-dependencies]
+dev = [
+    "black==20.8b1",
+    "pytest-cov==2.11.1",
+    "pytest==6.2.3",
+    "pylint",
+    "flit>=3.2",
+    "invoke",
+    "Sphinx<3.6",
+    "sphinx_rtd_theme",
+]
+
+[tool.pytest.ini_options]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+]
+
+[tool.black]
+line-length = 120
+target-version = ['py38']
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+    | private
+    | docs
+    | db
+    | misc
+  )/
+  | settings.py     # This is where you define files that should not be stylized by black
+                     # the root of the project
+)
+'''
+[tool.pylint.general]
+# fail-under = "8.0"
+
+[tool.pylint.basic]
+# No docstrings required for private methods (Pylint default), or for test_ functions, or for inner Meta classes.
+no-docstring-rgx="^(_|test_|Meta$)"
+good-names="db,nr,i,ip,j,k,ex,Run,_,fi,fo"
+
+[tool.pylint.messages_control]
+# Line length is enforced by Black, so pylint doesn't need to check it.
+# Pylint and Black disagree about how to format multi-line arrays; Black wins.
+disable = """,
+    line-too-long,
+    bad-continuation,
+    """
+
+[tool.pylint.miscellaneous]
+# Don't flag TODO_ as a failure, let us commit with things that still need to be done in the code
+notes = """,
+    FIXME,
+    XXX,
+    """
