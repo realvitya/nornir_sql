@@ -27,6 +27,36 @@ def test_create_host(test_database):
     assert test_host.dict() == result
 
 
+def test_create_host_with_extra_elements(test_database):
+    """Test host creation with extra values which are not supported
+
+    These fields should be ignored.
+    """
+    data = {
+        "name": "testhost",
+        "hostname": "testhostname",
+        "data.data1": "data1value",
+        "data.data2": "data2value",
+        "someextra": "value",
+    }
+    result = {
+        "name": "testhost",
+        "hostname": "testhostname",
+        "username": None,
+        "password": None,
+        "platform": None,
+        "port": None,
+        "groups": [],
+        "data": {
+            "data1": "data1value",
+            "data2": "data2value",
+        },
+        "connection_options": {},
+    }
+    test_host: Host = test_database._get_inventory_element(Host, data=data)
+    assert test_host.dict() == result
+
+
 def test_create_group(test_database):
     """Test group creation"""
     data = {"name": "testgroup", "data.data1": "data1value", "data.data2": "data2value"}
