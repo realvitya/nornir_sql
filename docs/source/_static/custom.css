@@ -1,0 +1,130 @@
+.wy-nav-content {
+    max-width: 100% ! important;
+}
+/*** UNITY SPHINX THEME OVERRIDES ***/
+@font-face {
+    font-family: 'EMPrint';
+    src: url('fonts/EMprintW05Regular_web.woff2') format('woff2'),
+         url('fonts/EMprintW05Regular_web.woff') format('woff'),
+         url('fonts/EMprintW05Regular_web.ttf')  format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'EMPrint';
+    src: url('fonts/EMprintW05Semibold_web.woff2') format('woff2'),
+         url('fonts/EMprintW05Semibold_web.woff') format('woff'),
+         url('fonts/EMprintW05Semibold_web.ttf')  format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+body, .rst-content .toctree-wrapper>p.caption, h1, h2, h3, h4, h5, h6, legend {
+    font-family: 'EMPrint','HelveticaNeue',Helvetica,Arial,sans-serif;
+}
+a, a:visited {
+    color: #0c69b0;
+}
+a:hover {
+    color: #4e4a4a;
+}
+.wy-side-nav-search {
+    background: #3a397b;
+    background-image: linear-gradient(45deg,#3a397b 0,#3190d9 100%);
+    padding: 2rem 0.809em;
+    text-align: left;
+}
+.wy-nav-side {
+    background: #112;
+}
+.wy-nav-content {
+    background: #fff;
+}
+.wy-menu-vertical p.caption {
+    color: #c3c3c3;
+}
+.wy-menu-vertical a {
+    color: #fff;
+}
+.wy-side-nav-search .icon.icon-home {
+    font-size: 1.2rem;
+    color: #fff;
+    position: relative;
+    top: -.25rem;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: 0;
+}
+.wy-side-nav-search .icon.icon-home:before {
+    display: none;
+}
+.rst-content dl:not(.docutils) dt,
+.rst-content dl:not(.simple) dt,
+html.writer-html4 .rst-content dl:not(.docutils)>dt,
+html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.glossary):not(.simple)>dt {
+    background: #f5f5f5;
+    color: #0c69b0;
+    border-top: solid 3px #0c69b0;
+    font-size: 100%;
+}
+.wy-menu-vertical li.on a,
+.wy-menu-vertical li.current > a {
+    color: #fff;
+    background: #3b3b4a;
+    border-bottom: solid 1px #3b3b4a;
+    border-top: solid 1px #3b3b4a;
+}
+.wy-menu-vertical a:hover,
+.wy-menu-vertical li.current,
+.wy-menu-vertical li.current > a,
+.wy-menu-vertical li.on a:hover,
+.wy-menu-vertical li.current > a:hover,
+.wy-menu-vertical li.current a:hover,
+.wy-menu-vertical a:active {
+    background: #3b3b4a !important;
+}
+.wy-menu-vertical li.current a {
+    color: #fff !important;
+    border-right: solid 1px #112;
+    border-bottom: solid 1px transparent !important;
+    border-top: solid 1px transparent !important;
+}
+.wy-menu-vertical li.current ul {
+    padding-bottom: .4045em;
+}
+.wy-menu-vertical li span.toctree-expand,
+.wy-menu-vertical li.on a span.toctree-expand,
+.wy-menu-vertical li.current > a span.toctree-expand,
+.wy-menu-vertical li.on a:hover span.toctree-expand,
+.wy-menu-vertical li.current > a:hover span.toctree-expand {
+    color: #fff;
+}
+.codeblock,
+pre.literal-block,
+.rst-content .literal-block,
+.rst-content pre.literal-block,
+div[class^='highlight'] {
+    background: #f5f5f5;
+}
+.rst-content .linenodiv pre,
+.rst-content div[class^=highlight] pre,
+.rst-content pre.literal-block {
+    font-size: 14px;
+}
+.rst-content code, .rst-content tt, code {
+    font-size: 95%;
+}
+.rst-content table.docutils:not(.field-list) tr:nth-child(2n-1) td,
+.wy-table-backed,
+.wy-table-odd td,
+.wy-table-striped tr:nth-child(2n-1) td {
+    background-color: #f5f5f5;
+}
+html.writer-html5 .rst-content dl.field-list>dt {
+    background-color: #f5f5f5;
+    padding: 0 6px;
+    font-size: 90%;
+    border-top: 2px solid;
+}
+/*html.writer-html5 .rst-content dl.field-list {
+    display: flex;
+    align-items: flex-start;
+}*/
