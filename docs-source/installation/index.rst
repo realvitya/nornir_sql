@@ -24,6 +24,6 @@ Installing nornir-sql
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. include:: ../../README.rst
-    :start-after: _install_instructions
-    :end-before: _install_instructions_end
+    :start-after: install_instructions
+    :end-before: install_instructions_end
 
