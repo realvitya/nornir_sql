@@ -93,7 +93,7 @@ class SQLInventory:
             self.engine = create_engine(sql_connection)
         except SQLAlchemyError as err:
             logger.error(err)
-            raise err
+            raise err from err
 
     def _get_inventory_element(self, typ: Type[HostOrGroup], data: Dict[str, str]) -> HostOrGroup:
         """Create a Host or Group object from dict

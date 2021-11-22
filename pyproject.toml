@@ -2,9 +2,6 @@
 requires = ["flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
 
-#[project.scripts]
-#network-backup = "network_backup.main:run"
-
 [project]
 name = "nornir_sql"
 authors = [ {name = "Viktor Kertesz", email = "viktor.kertesz@exxonmobil.com"},
@@ -13,8 +10,8 @@ authors = [ {name = "Viktor Kertesz", email = "viktor.kertesz@exxonmobil.com"},
 readme = "README.rst"
 requires-python = ">=3.6,<4"
 dependencies = [
-    "nornir",
-    "sqlalchemy",
+    "nornir >=3,<4",
+    "sqlalchemy >=1.4,<2",
 ]
 classifiers = [
     "License :: OSI Approved :: MIT License",
@@ -32,7 +29,8 @@ dynamic = ['version', 'description']
 name = "nornir_sql"
 
 [project.urls]
-Source = "https://github.xom.com/viktor-kertesz/nornir_sql"
+Source = "https://github.com/viktorkertesz/nornir_sql"
+Documentation = "https://viktorkertesz.github.io/nornir_sql"
 
 [project.optional-dependencies]
 dev = [
@@ -47,8 +45,13 @@ dev = [
 ]
 
 [tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q --cov=nornir_sql --cov-report=term-missing"
 markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+]
+testpaths = [
+    "tests"
 ]
 
 [tool.black]
@@ -72,6 +75,7 @@ exclude = '''
     | docs
     | db
     | misc
+    | private
   )/
   | settings.py     # This is where you define files that should not be stylized by black
                      # the root of the project
