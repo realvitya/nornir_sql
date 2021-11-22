@@ -8,7 +8,7 @@ consider looking on this project.
 
 ------
 
-| Documentation: TDB
+| Documentation: `<https://viktorkertesz.github.io/nornir_sql>`__
 | Source code: `<https://github.com/viktorkertesz/nornir_sql>`__
 
 ------

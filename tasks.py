@@ -48,3 +48,32 @@ def mkdocs(c, all=False):
     if all:
         opts.append("-a")
     c.run("sphinx-build docs-source docs " + " ".join(opts))
+
+
+@task
+def clean(c, force=False):
+    """Cleanup working directory
+
+    Cleanup will skip `private` and `.idea` directories to preserve developer data.
+    Without `--force` we print out what to be done but no deletion will happen!
+    """
+    if force:
+        c.run("git clean -d -x -e private -e .idea -f")
+    else:
+        c.run("git clean -d -x -e private -e .idea -n")
+
+
+@task(linters)
+def build(c):
+    """Build wheel and source packages as preparation for pypi deployment
+
+    Consider doing `clean` before running this!
+    """
+    c.run("flit build")
+
+
+@task(linters)
+def publish(c):
+    """Build and publish on PyPi"""
+    print("\n", " PUBLISH ".center(80, "-"), "\nPlease run this command:\n")
+    print("flit publish --format wheel")
