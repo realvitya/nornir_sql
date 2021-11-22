@@ -47,4 +47,4 @@ def mkdocs(c, all=False):
     opts = []
     if all:
         opts.append("-a")
-    c.run("sphinx-build docs/source docs/build " + " ".join(opts))
+    c.run("sphinx-build docs-source docs " + " ".join(opts))

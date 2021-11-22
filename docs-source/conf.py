@@ -16,9 +16,9 @@ import pkg_resources
 import toml
 import sphinx_rtd_theme
 
-sys.path.insert(0, os.path.abspath('../docs'))
+sys.path.insert(0, os.path.abspath('.'))
 
-toml_dict = toml.load("../../pyproject.toml")
+toml_dict = toml.load("../pyproject.toml")
 # -- Project information -----------------------------------------------------
 
 project = toml_dict['project']['name']

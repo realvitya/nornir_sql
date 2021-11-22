@@ -23,7 +23,7 @@ Activating the new venv:
 Installing nornir-sql
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. include:: ../../../README.rst
+.. include:: ../../README.rst
     :start-after: _install_instructions
     :end-before: _install_instructions_end
 
