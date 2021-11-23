@@ -8,16 +8,16 @@ consider looking on this project.
 
 ------
 
-| Documentation: TDB
+| Documentation: `<https://viktorkertesz.github.io/nornir_sql>`__
 | Source code: `<https://github.com/viktorkertesz/nornir_sql>`__
 
 ------
 
 Installation
 ------------
-.. _install_instructions
+.. install_instructions
 
-Install from pipy (TBD)
+Install from pipy
 
 .. code-block:: console
 
@@ -37,7 +37,7 @@ Install from GitHUB clone for development
     cd nornir_sql
     pip install -e .[dev]
 
-.. _install_instructions_end
+.. install_instructions_end
 
 Simple example
 --------------
@@ -65,7 +65,8 @@ Simple example
 
 Configuration
 -------------
-.. _configuration
+.. configuration
+
 This plugin is based on SQLAlchemy and supports all databases that SQLAlchemy does.
 
 These configuration options can be used:
@@ -85,4 +86,4 @@ These configuration options can be used:
    | Same requirements apply as for the ``hosts_query``.
 #. | ``defaults``: This is a dictionary which contains inventory elements. These will be applied to hosts.
 
-.. _configuration_end
+.. configuration_end
