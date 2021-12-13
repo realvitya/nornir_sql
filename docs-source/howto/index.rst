@@ -1,3 +1,9 @@
 Howto
------
-In this section I am collecting problems and solutions
+=====
+Collection of problems and solutions:
+
+.. toctree::
+   :maxdepth: 1
+   :glob:
+
+   *

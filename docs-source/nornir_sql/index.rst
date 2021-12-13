@@ -1,5 +1,5 @@
 Reference
----------
+=========
 
 .. toctree::
    :maxdepth: 2
@@ -8,6 +8,6 @@ Reference
    errors/index
 
 Indexes
-~~~~~~~
+-------
 * :ref:`genindex`
 * :ref:`modindex`
