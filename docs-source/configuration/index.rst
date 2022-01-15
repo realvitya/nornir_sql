@@ -24,7 +24,9 @@ Very minimal inventory setup:
     nr = InitNornir(inventory=inventory)
 
 .. toctree::
+    :maxdepth: 1
 
     schema-constraints
     python-configuration
     yaml-configuration
+    using-groups-file

@@ -76,6 +76,10 @@ These configuration options can be used:
    | If ``groups`` are returned, the following ``groups_query`` also has to be specified!
 #. | ``groups_query``: Select statement which returns groups inventory elements.
    | Same requirements apply as for the ``hosts_query``.
+#. | ``groups_file``: path to a YAML file containing group definitions. Format is that same as used by
+     ``SimpleInventory``
+   | This parameter is ignored when ``groups_query`` is specified!
+   | Using this parameter requires group assignments outside of this plugin! Check :ref:`using-groups-file`!
 #. | ``defaults``: This is a dictionary which contains inventory elements. These will be applied to hosts.
 
 .. configuration_options_end
