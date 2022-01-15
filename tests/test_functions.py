@@ -162,6 +162,32 @@ def test_database_load_with_groups(test_database_with_groups):
 
 
 @pytest.mark.slow
+def test_database_load_with_groups_file(test_database_with_groups_file):
+    """Testing of loading inventory from test sqlite database"""
+    test_inventory: Inventory = test_database_with_groups_file.load()
+    hosts = [host.name for host in test_inventory.hosts.values()]
+    groups = [group.name for group in test_inventory.groups.values()]
+    test_group = test_inventory.groups["test"]
+    # groups cannot be added during SQL loading when using groups_file. We may use this or transform function:
+    test_inventory.hosts["SW1"].groups.add(test_group)
+    # check if we have all hosts
+    assert hosts == ["FW1", "FW2", "FW3", "SW1", "SW2", "SW3", "ROUTER1", "ROUTER2", "ROUTER3"]
+    # check if we have all groups
+    assert groups == ["ios", "iosxr", "nxos", "eos", "junos", "test"]
+    # check if recursive data resolution works (somedata is coming from 'test' group)
+    assert test_inventory.hosts["SW1"]["somedata"] == "somevalue"
+    # check if connection_options was coming from group 'ios' which is child of 'test'
+    assert test_inventory.hosts["SW1"].get_connection_parameters("netmiko").dict() == {
+        "extras": {},
+        "hostname": "SW1",
+        "password": None,
+        "platform": "cisco_ios",
+        "port": None,
+        "username": None,
+    }
+
+
+@pytest.mark.slow
 def test_sqlalchemy_wrong_url(test_database_wrong_url):
     with pytest.raises(SQLAlchemyError):
         SQLInventory(test_database_wrong_url, "")

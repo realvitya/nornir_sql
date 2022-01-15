@@ -70,3 +70,8 @@ def test_database_wrong_query():
 @pytest.fixture
 def test_database_wrong_url():
     return "sqlite://sample/test.db"
+
+
+@pytest.fixture
+def test_database_with_groups_file():
+    return SQLInventory("sqlite:///sample/test.db", hosts_query=hosts_query, groups_file="sample/groups.yaml")
