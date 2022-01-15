@@ -79,7 +79,8 @@ These configuration options can be used:
 #. | ``groups_file``: path to a YAML file containing group definitions. Format is that same as used by
      ``SimpleInventory``
    | This parameter is ignored when ``groups_query`` is specified!
-   | Using this parameter requires group assignments outside of this plugin! Check :ref:`using-groups-file`!
+   | Using this parameter requires group assignments outside of this plugin!
+     Check `docs <https://viktorkertesz.github.io/nornir_sql/configuration/using-groups-file.html>`__!
 #. | ``defaults``: This is a dictionary which contains inventory elements. These will be applied to hosts.
 
 .. configuration_options_end
