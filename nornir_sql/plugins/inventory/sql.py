@@ -16,6 +16,8 @@ from nornir.core.inventory import (
 )
 from sqlalchemy import create_engine
 from sqlalchemy.exc import SQLAlchemyError
+from pathlib import Path
+import ruamel.yaml
 
 logger = logging.getLogger("nornir_sql")
 
@@ -62,7 +64,12 @@ class SQLInventory:
     """SQLInventory implements SQL inventory plugin for Nornir"""
 
     def __init__(
-        self, sql_connection: str, hosts_query: str, groups_query: str = "", defaults: Optional[Dict[str, str]] = None
+        self,
+        sql_connection: str,
+        hosts_query: str,
+        groups_query: str = "",
+        groups_file: Optional[str] = None,
+        defaults: Optional[Dict[str, str]] = None,
     ):
         """Setup SQLInventory parameters
 
@@ -82,10 +89,15 @@ class SQLInventory:
             sql_connection (str): SQL connection string. E.g.: 'mssql+pymssql://@SERVERNAME/DBNAME'
             hosts_query (str): Query string for getting hosts. All fields must be named as above!
             groups_query (str): Query string for getting groups. All fields must be named as above!
+            groups_file (str): YAML file path to group definition file. Ignored when groups_query is specified!
             defaults (dict): dict of default values.
         """
         self.hosts_query: str = hosts_query
         self.groups_query: str = groups_query
+        if groups_file:
+            self.groups_file: Optional[Path] = Path(groups_file).expanduser()
+        else:
+            self.groups_file: Optional[Path] = None
         self.defaults: Defaults = _get_defaults(defaults)
         self.engine = None
 
@@ -105,6 +117,18 @@ class SQLInventory:
         Returns:
             Host or Group object
         """
+        if isinstance(data.get("groups"), list):
+            # groups come from groups_file
+            groups = data["groups"]
+        else:
+            # groups come from sql as a string
+            groups = data["groups"].replace(" ", "").split(",") if data.get("groups") else []
+        if isinstance(data.get("data"), dict):
+            # extra data come from groups_file
+            extra_data = data["data"]
+        else:
+            # extra data is provided by SQL
+            extra_data = {extra.split(".")[1]: data.get(extra, "") for extra in data if "data." in extra}
         ret = typ(
             name=data.get("name"),
             hostname=data.get("hostname"),
@@ -113,8 +137,8 @@ class SQLInventory:
             password=data.get("password"),
             platform=data.get("platform"),
             # ParentGroups object will be prepared after groups are loaded. Here we note the group names.
-            groups=data["groups"].replace(" ", "").split(",") if data.get("groups") else [],
-            data={extra.split(".")[1]: data.get(extra, "") for extra in data if "data." in extra},
+            groups=groups,
+            data=extra_data,
             defaults=self.defaults,
             connection_options=_get_connection_options(data.get("connection_options", {})),
         )
@@ -136,6 +160,17 @@ class SQLInventory:
                     for group_data in results:
                         group = self._get_inventory_element(Group, dict(group_data))
                         groups[group.name] = group
+                elif self.groups_file:
+                    yml = ruamel.yaml.YAML(typ="safe")
+                    if self.groups_file.exists():
+                        with open(self.groups_file) as fi:
+                            groups_dict = yml.load(fi) or {}
+                        for n, g in groups_dict.items():
+                            group_data = {"name": n, **g}
+                            group = self._get_inventory_element(Group, group_data)
+                            groups[group.name] = group
+
+                if len(groups) > 0:
                     # replace strings to objects
                     for group in groups.values():
                         group.groups = ParentGroups([groups[g] for g in group.groups])

@@ -17,7 +17,7 @@ Installation
 ------------
 .. install_instructions
 
-Install from pipy
+Install from `pypi <https://pypi.org/project/nornir_sql>`__
 
 .. code-block:: console
 
@@ -28,14 +28,6 @@ Install from `GitHUB <https://github.com/viktorkertesz/nornir_sql>`__
 .. code-block:: console
 
     pip install git+https://github.com/viktorkertesz/nornir_sql.git
-
-Install from GitHUB clone for development
-
-.. code-block:: console
-
-    git clone https://github.com/viktorkertesz/nornir_sql.git
-    cd nornir_sql
-    pip install -e .[dev]
 
 .. install_instructions_end
 
@@ -65,11 +57,11 @@ Simple example
 
 Configuration
 -------------
-.. configuration
-
 This plugin is based on SQLAlchemy and supports all databases that SQLAlchemy does.
 
 These configuration options can be used:
+
+.. configuration_options_start
 
 #. | ``sql_connection``: SQLAlchemy connection string
    | Format: ``{driver}://[user]:[password]@{DBSERVER}/{DATABASE}``
@@ -84,6 +76,11 @@ These configuration options can be used:
    | If ``groups`` are returned, the following ``groups_query`` also has to be specified!
 #. | ``groups_query``: Select statement which returns groups inventory elements.
    | Same requirements apply as for the ``hosts_query``.
+#. | ``groups_file``: path to a YAML file containing group definitions. Format is that same as used by
+     ``SimpleInventory``
+   | This parameter is ignored when ``groups_query`` is specified!
+   | Using this parameter requires group assignments outside of this plugin!
+     Check `docs <https://viktorkertesz.github.io/nornir_sql/configuration/using-groups-file.html>`__!
 #. | ``defaults``: This is a dictionary which contains inventory elements. These will be applied to hosts.
 
-.. configuration_end
+.. configuration_options_end
