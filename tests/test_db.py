@@ -18,9 +18,9 @@ def test_database_load(test_database):
 
 
 @pytest.mark.slow
-def test_database_load_with_groups(test_database_with_groups):
+def test_database_load_with_groups(test_database_with_groups_sql):
     """Testing of loading inventory from test sqlite database"""
-    test_inventory: Inventory = test_database_with_groups.load()
+    test_inventory: Inventory = test_database_with_groups_sql.load()
     hosts = [host.name for host in test_inventory.hosts.values()]
     groups = [group.name for group in test_inventory.groups.values()]
     # check if we have all hosts
