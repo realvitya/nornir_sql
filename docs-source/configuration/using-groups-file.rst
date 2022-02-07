@@ -1,13 +1,13 @@
-.. _using-groups-file:
+.. _using-groups:
 
-Using groups-file
-=================
-If you wanted to store your group definitios in a YAML file instead of the SQL DB, you can use
-``groups-file`` parameter by inventory configuration. The format of the file is exactly the same as
+Using groups
+============
+If you wanted to specify your group definitions as a dict or as a YAML file instead of the SQL DB, you can use
+``groups`` or ``groups-file`` parameter by inventory configuration. The format of the data is exactly the same as
 of the ``SimpleInventory`` plugin.
 
 .. warning::
-    When you define groups from file, you have to assign the group objects to the hosts after
+    When you define groups, you have to assign the group objects to the hosts after
     inventory was loaded!
 
 In the following groups file we set couple of connection parameters for different plugins.

@@ -80,11 +80,11 @@ These configuration options can be used:
      ``SimpleInventory``
    | This parameter is ignored when ``groups_query`` or ``groups`` are specified!
    | Using this parameter requires group assignments outside of this plugin!
-     Check `docs <https://viktorkertesz.github.io/nornir_sql/configuration/using-groups-file.html>`__!
+     Check `docs <https://viktorkertesz.github.io/nornir_sql/configuration/using-groups.html>`__!
 #. | ``groups``: group definition as dict. Same restrictions and features apply as by using ``groups_file``!
    | Ignored when ``groups_query`` is specified!
    | Using this parameter requires group assignments outside of this plugin!
-     Check `docs <https://viktorkertesz.github.io/nornir_sql/configuration/using-groups-file.html>`__!
+     Check `docs <https://viktorkertesz.github.io/nornir_sql/configuration/using-groups.html>`__!
 #. | ``defaults``: This is a dictionary which contains inventory elements. These will be applied to hosts.
 
 .. configuration_options_end
