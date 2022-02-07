@@ -69,6 +69,7 @@ class SQLInventory:
         hosts_query: str,
         groups_query: str = "",
         groups_file: Optional[str] = None,
+        groups: Optional[dict] = None,
         defaults: Optional[Dict[str, str]] = None,
     ):
         """Setup SQLInventory parameters
@@ -89,7 +90,8 @@ class SQLInventory:
             sql_connection (str): SQL connection string. E.g.: 'mssql+pymssql://@SERVERNAME/DBNAME'
             hosts_query (str): Query string for getting hosts. All fields must be named as above!
             groups_query (str): Query string for getting groups. All fields must be named as above!
-            groups_file (str): YAML file path to group definition file. Ignored when groups_query is specified!
+            groups_file (str): YAML file path to group definition file. Ignored when groups_query or groups are specified!
+            groups (dict): group definition as dict. Ignored when groups_query is specified!
             defaults (dict): dict of default values.
         """
         self.hosts_query: str = hosts_query
@@ -98,6 +100,7 @@ class SQLInventory:
             self.groups_file: Optional[Path] = Path(groups_file).expanduser()
         else:
             self.groups_file: Optional[Path] = None
+        self.groups: dict = groups
         self.defaults: Defaults = _get_defaults(defaults)
         self.engine = None
 
@@ -159,6 +162,11 @@ class SQLInventory:
                     results = connection.execute(self.groups_query)
                     for group_data in results:
                         group = self._get_inventory_element(Group, dict(group_data))
+                        groups[group.name] = group
+                elif self.groups:
+                    for n, g in self.groups.items():
+                        group_data = {"name": n, **g}
+                        group = self._get_inventory_element(Group, group_data)
                         groups[group.name] = group
                 elif self.groups_file:
                     yml = ruamel.yaml.YAML(typ="safe")
