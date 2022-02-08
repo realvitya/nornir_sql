@@ -27,8 +27,6 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Push changes
-        uses: ad-m/github-push-action@master
+      - uses: ammaraskar/sphinx-action@master
         with:
-          branch: emajidov-patch-1
-          directory: gh_pages
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          docs-folder: "docs/"
