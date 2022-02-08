@@ -27,4 +27,5 @@ jobs:
 
       - uses: ammaraskar/sphinx-action@master
         with:
+          build-command: "sphinx-build docs-source docs"
           docs-folder: "docs/"
