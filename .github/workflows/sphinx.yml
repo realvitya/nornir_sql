@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Sphinx Page Builder
 
 # Controls when the workflow will run
 on:
@@ -29,6 +29,6 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          branch: emajido-patch-1
+          branch: emajidov-patch-1
           directory: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
