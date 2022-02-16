@@ -1,0 +1,25 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Publish on PyPi
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Build and Publish to PyPI
+        # You may pin to the exact commit or the version.
+        # uses: etils-actions/pypi-build-publish@ecf475b634504789962bf42198b75cc27dfbd48e
+        uses: etils-actions/pypi-build-publish@v1
+        with:
+          # Token of the PyPI account publishing the project.
+          pypi-token: ${{ secrets.PYPI_API_TOKEN }}
