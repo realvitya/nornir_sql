@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "nornir_sql"
-authors = [ {name = "Viktor Kertesz", email = "viktor.kertesz@exxonmobil.com"},
+authors = [ {name = "Viktor Kertesz", email = "vkertesz2@gmail.com"},
 ]
 
 readme = "README.rst"
