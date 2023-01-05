@@ -30,8 +30,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install build
           pip install .[dev]
-      - name: Build package
-        run: python -m build
       - name: Build docs
         run: python -m sphinx-build docs-source docs- a
      
