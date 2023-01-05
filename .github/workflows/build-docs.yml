@@ -31,7 +31,7 @@ jobs:
           pip install build
           pip install .[dev]
       - name: Build docs
-        run: python -m sphinx-build docs-source docs- a
+        run: sphinx-build docs-source docs -a
      
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v3
