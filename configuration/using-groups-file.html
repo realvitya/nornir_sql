@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using groups &mdash; nornir_sql 0.1.0 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Examples" href="../examples/index.html" />
+    <link rel="prev" title="YAML configration" href="yaml-configuration.html" />
+    <link href="../_static/custom.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            nornir_sql
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Plugin configuration</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="schema-constraints.html">Schema constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python-configuration.html">Python configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="yaml-configuration.html">YAML configration</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Using groups</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#assigning-groups-to-hosts">Assigning groups to hosts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Howto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute/index.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nornir_sql/index.html">Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">nornir_sql</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Plugin configuration</a></li>
+      <li class="breadcrumb-item active">Using groups</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/configuration/using-groups-file.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="using-groups">
+<span id="id1"></span><h1>Using groups<a class="headerlink" href="#using-groups" title="Permalink to this headline">¶</a></h1>
+<p>If you wanted to specify your group definitions as a dict or as a YAML file instead of the SQL DB, you can use
+<code class="docutils literal notranslate"><span class="pre">groups</span></code> or <code class="docutils literal notranslate"><span class="pre">groups-file</span></code> parameter by inventory configuration. The format of the data is exactly the same as
+of the <code class="docutils literal notranslate"><span class="pre">SimpleInventory</span></code> plugin.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When you define groups, you have to assign the group objects to the hosts after
+inventory was loaded!</p>
+</div>
+<p>In the following groups file we set couple of connection parameters for different plugins.
+After assigning the correct group we can use all of these plugins to connect to devices.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="nt">ios</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ios</span>
+<span class="w">  </span><span class="nt">connection_options</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">netmiko</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cisco_ios</span>
+<span class="w">      </span><span class="nt">extras</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">    </span><span class="nt">scrapli</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cisco_iosxe</span>
+<span class="w">      </span><span class="nt">extras</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">    </span><span class="nt">napalm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ios</span>
+<span class="w">      </span><span class="nt">extras</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">optional_args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+
+<span class="nt">iosxr</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">iosxr</span>
+<span class="w">  </span><span class="nt">connection_options</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">netmiko</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cisco_xr</span>
+<span class="w">      </span><span class="nt">extras</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">    </span><span class="nt">scrapli</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cisco_iosxr</span>
+<span class="w">      </span><span class="nt">extras</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">    </span><span class="nt">napalm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">iosxr</span>
+<span class="w">      </span><span class="nt">extras</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">optional_args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+
+<span class="nt">nxos</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nxos</span>
+<span class="w">  </span><span class="nt">connection_options</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">netmiko</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cisco_nxos_ssh</span>
+<span class="w">      </span><span class="nt">extras</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">    </span><span class="nt">scrapli</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cisco_nxos</span>
+<span class="w">      </span><span class="nt">extras</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">    </span><span class="nt">napalm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nxos_ssh</span>
+<span class="w">      </span><span class="nt">extras</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">optional_args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+
+<span class="nt">eos</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">eos</span>
+<span class="w">  </span><span class="nt">connection_options</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">netmiko</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arista_eos</span>
+<span class="w">      </span><span class="nt">extras</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">global_delay_factor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="nt">scrapli</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arista_eos</span>
+<span class="w">      </span><span class="nt">extras</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">    </span><span class="nt">napalm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">eos</span>
+<span class="w">      </span><span class="nt">extras</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">optional_args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+
+<span class="nt">junos</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">junos</span>
+<span class="w">  </span><span class="nt">connection_options</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">netmiko</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">juniper_junos</span>
+<span class="w">      </span><span class="nt">extras</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">    </span><span class="nt">scrapli</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">juniper_junos</span>
+<span class="w">      </span><span class="nt">extras</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">    </span><span class="nt">napalm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">junos</span>
+<span class="w">      </span><span class="nt">extras</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">optional_args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+
+<span class="nt">test</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">groups</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;ios&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">data</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">somedata</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;somevalue&#39;</span>
+</pre></div>
+</div>
+<div class="section" id="assigning-groups-to-hosts">
+<h2>Assigning groups to hosts<a class="headerlink" href="#assigning-groups-to-hosts" title="Permalink to this headline">¶</a></h2>
+<p>As hosts are not referencing the groups upon loading them from SQL, we have to do the assignment after
+all hosts and groups are loaded. We cannot use <code class="docutils literal notranslate"><span class="pre">transform</span> <span class="pre">function</span></code> because we cannot reference groups
+while loading a particular host.</p>
+<p>Here is a solution to define a group assignment function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nornir.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">Nornir</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">assign_groups</span><span class="p">(</span><span class="n">nr</span><span class="p">:</span> <span class="n">Nornir</span><span class="p">):</span>
+ <span class="n">groups</span> <span class="o">=</span> <span class="n">nr</span><span class="o">.</span><span class="n">inventory</span><span class="o">.</span><span class="n">groups</span>
+ <span class="k">for</span> <span class="n">host</span> <span class="ow">in</span> <span class="n">nr</span><span class="o">.</span><span class="n">inventory</span><span class="o">.</span><span class="n">hosts</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+     <span class="c1"># put whatever logic to assign groups</span>
+     <span class="k">if</span> <span class="s2">&quot;WS-C&quot;</span> <span class="ow">in</span> <span class="n">host</span><span class="p">[</span><span class="s1">&#39;pid&#39;</span><span class="p">]:</span>
+         <span class="n">host</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">groups</span><span class="p">[</span><span class="s2">&quot;ios&quot;</span><span class="p">])</span>
+     <span class="k">elif</span> <span class="s2">&quot;SRX&quot;</span> <span class="ow">in</span> <span class="n">host</span><span class="p">[</span><span class="s1">&#39;pid&#39;</span><span class="p">]:</span>
+         <span class="n">host</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">groups</span><span class="p">[</span><span class="s2">&quot;junos&quot;</span><span class="p">])</span>
+<span class="o">...</span>
+<span class="n">nr</span> <span class="o">=</span> <span class="n">InitNornir</span><span class="p">(</span><span class="n">inventory</span><span class="o">=</span><span class="n">inventory</span><span class="p">)</span>
+<span class="n">assign_groups</span><span class="p">(</span><span class="n">nr</span><span class="p">)</span>
+
+<span class="c1"># check if we got the connection parameters</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">nr</span><span class="o">.</span><span class="n">inventory</span><span class="o">.</span><span class="n">hosts</span><span class="p">[</span><span class="s2">&quot;SW1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get_connection_parameters</span><span class="p">(</span><span class="s2">&quot;netmiko&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">dict</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="yaml-configuration.html" class="btn btn-neutral float-left" title="YAML configration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../examples/index.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Viktor Kertesz, 2021.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

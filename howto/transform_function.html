@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I have no platform information in DB. How can I set it? &mdash; nornir_sql 0.1.0 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Contributing" href="../contribute/index.html" />
+    <link rel="prev" title="Howto" href="index.html" />
+    <link href="../_static/custom.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            nornir_sql
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/index.html">Plugin configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Howto</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">I have no platform information in DB. How can I set it?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example1-using-naming-convention">Example1 - using naming convention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example2-using-db-data">Example2 - using DB data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute/index.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nornir_sql/index.html">Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">nornir_sql</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Howto</a></li>
+      <li class="breadcrumb-item active">I have no platform information in DB. How can I set it?</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/howto/transform_function.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="i-have-no-platform-information-in-db-how-can-i-set-it">
+<h1>I have no platform information in DB. How can I set it?<a class="headerlink" href="#i-have-no-platform-information-in-db-how-can-i-set-it" title="Permalink to this headline">¶</a></h1>
+<p>If platform information is not saved directly in the asset database, still you can set the <strong>platform</strong> later
+after DB read is done. You can do hat by defining a so called transform function. That function will be called
+on every host object in your inventory after the DB load. The function can alter the data stored for each host.</p>
+<p>What that transform function do depends on what information you have in the database.</p>
+<div class="section" id="example1-using-naming-convention">
+<h2>Example1 - using naming convention<a class="headerlink" href="#example1-using-naming-convention" title="Permalink to this headline">¶</a></h2>
+<p>For example you have naming convention like this: SITE-TYPE-NUMBER</p>
+<dl class="simple">
+<dt>examples:</dt><dd><ul class="simple">
+<li><p>HOU-SW-01</p></li>
+<li><p>BDP-FW-01</p></li>
+<li><p>MSC-RTR-01</p></li>
+</ul>
+</dd>
+</dl>
+<p>You know that a switch can only be a junos, firewall should be panos and router is cisco ios, then this is a sample
+code for you:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nornir.core.plugins.inventory</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransformFunctionRegister</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">complete_host_data</span><span class="p">(</span><span class="n">host</span><span class="p">:</span> <span class="n">Host</span><span class="p">,</span> <span class="n">arg1</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Transform function to set platform for hosts</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        host (Host): host object passed by Nornir</span>
+<span class="sd">        arg1 (str): just an example argument you can use in your function</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;-SW-&quot;</span> <span class="ow">in</span> <span class="n">host</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="n">host</span><span class="o">.</span><span class="n">platform</span> <span class="o">=</span> <span class="s2">&quot;juniper_junos&quot;</span>
+        <span class="k">elif</span> <span class="s2">&quot;-FW-&quot;</span> <span class="ow">in</span> <span class="n">host</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="n">host</span><span class="o">.</span><span class="n">platform</span> <span class="o">=</span> <span class="s2">&quot;palo_panos&quot;</span>
+        <span class="k">elif</span> <span class="s2">&quot;-RTR-&quot;</span> <span class="ow">in</span> <span class="n">host</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="n">host</span><span class="o">.</span><span class="n">platform</span> <span class="o">=</span> <span class="s2">&quot;cisco_ios&quot;</span>
+
+<span class="c1"># make Nornir aware of your function</span>
+<span class="n">TransformFunctionRegister</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;complete_host_data&quot;</span><span class="p">,</span> <span class="n">complete_host_data</span><span class="p">)</span>
+
+<span class="c1"># setup inventory configuration</span>
+<span class="n">inventory</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;plugin&quot;</span><span class="p">:</span> <span class="s2">&quot;SQLInventory&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;sql_connection&quot;</span><span class="p">:</span> <span class="s2">&quot;......&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;hosts_query&quot;</span><span class="p">:</span> <span class="s2">&quot;......&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;transform_function&quot;</span><span class="p">:</span> <span class="s2">&quot;complete_host_data&quot;</span><span class="p">,</span>           <span class="c1"># your function name</span>
+    <span class="s2">&quot;transform_function_options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;arg1&quot;</span><span class="p">:</span> <span class="s2">&quot;somevalue&quot;</span><span class="p">},</span>  <span class="c1"># arguments for the function (optional)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example2-using-db-data">
+<h2>Example2 - using DB data<a class="headerlink" href="#example2-using-db-data" title="Permalink to this headline">¶</a></h2>
+<p>Your asset info may contain product number (PID) for your devices.
+You may use this query:</p>
+<div class="highlight-SQL notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">hostname</span><span class="p">,</span><span class="w"> </span><span class="n">product_number</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s1">&#39;data.pid&#39;</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">asset</span>
+</pre></div>
+</div>
+<p>So you could use this minimalistic transform function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">complete_host_data</span><span class="p">(</span><span class="n">host</span><span class="p">:</span> <span class="n">Host</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Transform function to set platform for hosts&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;ASA&quot;</span> <span class="ow">in</span> <span class="n">host</span><span class="p">[</span><span class="s1">&#39;pid&#39;</span><span class="p">]:</span>
+        <span class="n">host</span><span class="o">.</span><span class="n">platform</span> <span class="o">=</span> <span class="s2">&quot;cisco_asa&quot;</span>
+    <span class="k">elif</span> <span class="s2">&quot;WS-C&quot;</span> <span class="ow">in</span> <span class="n">host</span><span class="p">[</span><span class="s1">&#39;pid&#39;</span><span class="p">]:</span>
+        <span class="n">host</span><span class="o">.</span><span class="n">platform</span> <span class="o">=</span> <span class="s2">&quot;cisco_ios&quot;</span>
+    <span class="k">elif</span> <span class="s2">&quot;SRX&quot;</span> <span class="ow">in</span> <span class="n">host</span><span class="p">[</span><span class="s1">&#39;pid&#39;</span><span class="p">]:</span>
+        <span class="n">host</span><span class="o">.</span><span class="n">platform</span> <span class="o">=</span> <span class="s2">&quot;juniper_junos&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Howto" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../contribute/index.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Viktor Kertesz, 2021.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
