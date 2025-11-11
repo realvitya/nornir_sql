@@ -14,7 +14,7 @@ from nornir.core.inventory import (
     Defaults,
     ConnectionOptions,
 )
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.exc import SQLAlchemyError
 from pathlib import Path
 import ruamel.yaml
@@ -153,15 +153,19 @@ class SQLInventory:
         groups = Groups()
         try:
             with self.engine.connect() as connection:
-                results = connection.execute(self.hosts_query)
+                results = connection.execute(text(self.hosts_query))
 
                 for host_data in results:
-                    host = self._get_inventory_element(Host, dict(host_data))
+                    # Convert Row object to dictionary for SQLAlchemy 2.0 compatibility
+                    host_dict = {column: host_data[i] for i, column in enumerate(results.keys())}
+                    host = self._get_inventory_element(Host, host_dict)
                     hosts[host.name] = host
                 if self.groups_query:
-                    results = connection.execute(self.groups_query)
+                    results = connection.execute(text(self.groups_query))
                     for group_data in results:
-                        group = self._get_inventory_element(Group, dict(group_data))
+                        # Convert Row object to dictionary for SQLAlchemy 2.0 compatibility
+                        group_dict = {column: group_data[i] for i, column in enumerate(results.keys())}
+                        group = self._get_inventory_element(Group, group_dict)
                         groups[group.name] = group
                 elif self.groups:
                     for n, g in self.groups.items():

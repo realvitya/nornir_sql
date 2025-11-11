@@ -8,10 +8,10 @@ authors = [ {name = "Viktor Kertesz", email = "vkertesz2@gmail.com"},
 ]
 
 readme = "README.rst"
-requires-python = ">=3.6,<4"
+requires-python = ">=3.7,<4"
 dependencies = [
     "nornir >=3,<4",
-    "sqlalchemy >=1.4,<2",
+    "sqlalchemy >=2.0",
 ]
 classifiers = [
     "License :: OSI Approved :: MIT License",
@@ -34,9 +34,9 @@ Documentation = "https://viktorkertesz.github.io/nornir_sql"
 
 [project.optional-dependencies]
 dev = [
-    "black==20.8b1",
-    "pytest-cov==2.11.1",
-    "pytest==6.2.3",
+    "black",
+    "pytest-cov",
+    "pytest",
     "pylint",
     "flit>=3.2",
     "invoke",
