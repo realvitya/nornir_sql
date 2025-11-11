@@ -29,8 +29,8 @@ dynamic = ['version', 'description']
 name = "nornir_sql"
 
 [project.urls]
-Source = "https://github.com/viktorkertesz/nornir_sql"
-Documentation = "https://viktorkertesz.github.io/nornir_sql"
+Source = "https://github.com/realvitya/nornir_sql"
+Documentation = "https://realvitya.github.io/nornir_sql"
 
 [project.optional-dependencies]
 dev = [
