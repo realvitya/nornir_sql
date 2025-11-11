@@ -8,8 +8,8 @@ consider looking on this project.
 
 ------
 
-| Documentation: `<https://viktorkertesz.github.io/nornir_sql>`__
-| Source code: `<https://github.com/viktorkertesz/nornir_sql>`__
+| Documentation: `<https://realvitya.github.io/nornir_sql>`__
+| Source code: `<https://github.com/realvitya/nornir_sql>`__
 
 ------
 
@@ -23,11 +23,11 @@ Install from `pypi <https://pypi.org/project/nornir_sql>`__
 
     pip install nornir-sql
 
-Install from `GitHUB <https://github.com/viktorkertesz/nornir_sql>`__
+Install from `GitHUB <https://github.com/realvitya/nornir_sql>`__
 
 .. code-block:: console
 
-    pip install git+https://github.com/viktorkertesz/nornir_sql.git
+    pip install git+https://github.com/realvitya/nornir_sql.git
 
 .. install_instructions_end
 
@@ -80,11 +80,11 @@ These configuration options can be used:
      ``SimpleInventory``
    | This parameter is ignored when ``groups_query`` or ``groups`` are specified!
    | Using this parameter requires group assignments outside of this plugin!
-     Check `docs <https://viktorkertesz.github.io/nornir_sql/configuration/using-groups-file.html#assigning-groups-to-hosts>`__!
+     Check `docs <https://realvitya.github.io/nornir_sql/configuration/using-groups-file.html#assigning-groups-to-hosts>`__!
 #. | ``groups``: group definition as dict. Same restrictions and features apply as by using ``groups_file``!
    | Ignored when ``groups_query`` is specified!
    | Using this parameter requires group assignments outside of this plugin!
-     Check `docs <https://viktorkertesz.github.io/nornir_sql/configuration/using-groups-file.html#assigning-groups-to-hosts>`__!
+     Check `docs <https://realvitya.github.io/nornir_sql/configuration/using-groups-file.html#assigning-groups-to-hosts>`__!
 #. | ``defaults``: This is a dictionary which contains inventory elements. These will be applied to hosts.
 
 .. configuration_options_end
